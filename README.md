@@ -80,7 +80,53 @@ $ mkdir build
 $ cmake -S . -B build/
 cmake --build build
 ```
-You should now have a `blink.elf` to load via a debugger or `blink.uf2` that can be installed on the Pico via drag and drop. 
+You should have a directory structure similar to this:
+```bash
+.
+├── blink
+│   ├── blink.c
+│   ├── build
+│   └── CMakeLists.txt
+├── docs
+│   ├── getting-started-with-pico.pdf
+│   └── raspberry-pi-pico-c-sdk.pdf
+├── LICENSE
+├── Links.md
+├── pico-sdk
+└── README.md
+```
+## 8. Load and run `Blink`
+You should now have a `blink.elf` to load via a debugger or `blink.uf2` which can be loaded to 
+the device via several ways:
+
+### 1. Drag and Drop
+Connect the RPI Pico to your computer as a mass storage device ie hold down 
+the `BOOTSEL` as you connect it to your pc. Drag and drop the `.uf2` file to the device
+The Pico will reboot and unmount itself as a mass storage device and start to run the flashed code.
+
+### 2. Using the command line
+Again ensure to connect the RPI Pico as a mass storage device and confirm this with:
+```bash
+$ ls /media/daniel/RPI-RP2
+INDEX.HTM  INFO_UF2.TXT
+```
+Copy your `blink.uf2` onto the Pico:
+```bash
+$ sudo cp blink.uf2 /media/daniel/RPI-RP2
+```
+The pico will disconnect as a USB Mass Storage Device and reboot running your code.
+
+
+### 3. Picotool utility
+Build Picotool from source from it repository [here](https://github.com/raspberrypi/picotool.git)
+Load your `blink.uf2` ontu the pico and reboot with:
+```bash
+$ sudo picotool load hello_usb.uf2
+[sudo] password for daniel: 
+Loading into Flash: [==============================]  100%
+$ sudo picotool reboot            
+The device was rebooted into application mode.
+```
 
 
 ## Updating the sdk
@@ -92,7 +138,10 @@ $ git submodule update
 ```
 
 ## <b>Resources</b>
-1. [Documentation]()
-2. [Pico-sdk github repo]()
+1. [Documentation](https://datasheets.raspberrypi.com/pico/raspberry-pi-pico-c-sdk.pdf)
+2. [Pico-sdk github repo](https://github.com/raspberrypi/pico-sdk)
 
 ## <b>License</b>
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=for-the-badge)](LICENSE)
+
+Copyright 2022 Daniel Chege Nduati
